@@ -33,7 +33,11 @@ void Player::updatePlayerDir()
     //How? It lies within the Gamemechs* inside your private member
     char input = mainGameMechsRef->getInput();
     switch(input)
-    {
+    {//addd exit case main game mech ref set exuit trye
+        case ' ':
+            mainGameMechsRef->setExitTrue();
+            break;
+
         case 'w':
                 if (myDir != DOWN && myDir != UP)
                 {
@@ -72,23 +76,20 @@ void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
     //Work in progress
-    //pretty sure the logic for how to move the player needs to be updated
     
-    //playerPos.getObjPos(); //does this work?
     switch(myDir)
     {
         case UP:
-            //playerPos.setObjPos() something like this...maybe sorta
             playerPos.y = playerPos.y - 1;
             if (playerPos.y == 0)
             {
-                //playerPos.y = mainGameMechsRef->getBoardSizeY() - 2; //error here
+                playerPos.y = mainGameMechsRef->getBoardSizeY() - 2;
             }
             break;
 
         case DOWN:
             playerPos.y++;
-            if (playerPos.y == 9)//playerPos.y == mainGameMechsRef->getBoardSizeY() - 1) //same error here
+            if (playerPos.y == mainGameMechsRef->getBoardSizeY() - 1)
             {
                 playerPos.y = 1;
             }
@@ -98,13 +99,13 @@ void Player::movePlayer()
             playerPos.x--;
             if (playerPos.x == 0)
             {
-                //playerPos.x = mainGameMechsRef->getBoardSizeX() - 2;
+                playerPos.x = mainGameMechsRef->getBoardSizeX() - 2;
             }
             break;
 
         case RIGHT:
             playerPos.x++;
-            if (playerPos.x == 9)//playerPos.x == mainGameMechsRef->getBoardSizeY() - 1)
+            if (playerPos.x == mainGameMechsRef->getBoardSizeY() - 1)
             {
                 playerPos.x = 1;
             }

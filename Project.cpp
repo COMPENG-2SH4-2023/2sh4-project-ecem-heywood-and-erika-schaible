@@ -13,6 +13,7 @@ objPos myPos;
 
 GameMechs* myGM;
 Player* myPlayer;
+objPos playerPos;
 
 void Initialize(void);
 void GetInput(void);
@@ -65,52 +66,40 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen(); 
     int row, col, k;
-    //error with the mainGameMechsRef->, doesn't work....
 
-    // for (row = 0; row < mainGameMechsRef->getBoardSizeY(); row ++)
-    // {
-    //     if (row == 0 || row == 9)
-    //     {
-    //         MacUILib_printf("####################");
-    //     }
+    for (row = 0; row < myGM->getBoardSizeY(); row ++)
+    {
+        if (row == 0 || row == myGM->getBoardSizeY() - 1)
+        {
+            for(int i = 0; i < myGM->getBoardSizeX(); i++)
+            {
+                MacUILib_printf("#");
+            }
+        }
 
-    //     else
-    //     {
-    //         for (col = 0; col < mainGameMechsRef->getBoardSizeX(); col++)
-    //         {
-    //             if (col == 0 || col == 19)
-    //             {
-    //                 MacUILib_printf("#");
-    //             }
-    //             // else if (row == playerPos.y && col == playerPos.x)//do a get object pos here
-    //             // {
-    //             //     MacUILib_printf("%c", playerPos.symbol);
-    //             // }
-    //             else
-    //             {
-    //                 //int isOccupied = 0;
-    //                 // for(k = 0; k < 5; k++)
-    //                 // {
-    //                 //     if (row == itemBin[k].y && col == itemBin[k].x)
-    //                 //     {
-    //                 //         MacUILib_printf("%c", itemBin[k].symbol);
-    //                 //         isOccupied = 1;
-    //                 //         break;
-    //                 //     }
-    //                 // }
-    //                 //if(isOccupied == 0)
-    //                 //{
-    //                     MacUILib_printf(" ");
-    //                 //}
-    //             }
-    //         }
-    //     }   
-    //     MacUILib_printf("\n");
+        else
+        {
+            for (col = 0; col < myGM->getBoardSizeX(); col++)
+            {
+                if (col == 0 || col == myGM->getBoardSizeX() - 1)
+                {
+                    MacUILib_printf("#");
+                }
+                else if (row == playerPos.y && col == playerPos.x)
+                {
+                    MacUILib_printf("%c", playerPos.symbol);
+                }
+                else
+                {
+                        MacUILib_printf(" ");
+                }
+            }
+        }   
+        MacUILib_printf("\n");
 
-    //}
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos);
-    MacUILib_printf("Board Size: %d x %d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
+    }
+    myPlayer->getPlayerPos(playerPos);
+    MacUILib_printf("Board Size: %d x %d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), playerPos.x, playerPos.y, playerPos.symbol);
 }
 
 void LoopDelay(void)
