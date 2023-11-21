@@ -14,6 +14,7 @@ Player::Player(GameMechs* thisGMRef)
 Player::~Player()
 {
     // delete any heap members here
+    delete myPlayer;
 }
 
 void Player::getPlayerPos(objPos &returnPos)
@@ -33,7 +34,7 @@ void Player::updatePlayerDir()
     //How? It lies within the Gamemechs* inside your private member
     char input = mainGameMechsRef->getInput();
     switch(input)
-    {//addd exit case main game mech ref set exuit trye
+    {
         case ' ':
             mainGameMechsRef->setExitTrue();
             break;
@@ -69,13 +70,13 @@ void Player::updatePlayerDir()
 
             default:
                 break;
-    }       
+    } 
+    mainGameMechsRef->clearInput();      
 }
 
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    //Work in progress
     
     switch(myDir)
     {
@@ -105,7 +106,7 @@ void Player::movePlayer()
 
         case RIGHT:
             playerPos.x++;
-            if (playerPos.x == mainGameMechsRef->getBoardSizeY() - 1)
+            if (playerPos.x == mainGameMechsRef->getBoardSizeX() - 1)
             {
                 playerPos.x = 1;
             }
