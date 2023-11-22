@@ -9,11 +9,10 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-objPos myPos;
 
 GameMechs* myGM;
 Player* myPlayer;
-objPos playerPos;
+//objPos playerPos;
 
 void Initialize(void);
 void GetInput(void);
@@ -52,6 +51,8 @@ void Initialize(void)
 
 }
 
+
+
 void GetInput(void)
 {
    
@@ -59,13 +60,21 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+    //objPos playerPos; //new object position created ... NAME
+    //myPlayer->getPlayerPos(playerPos); // getting player position.. saved in myPlayer
+    // setting data of obj you set data to playerPos using the getter function
+
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
-    myPlayer->getPlayerPos(playerPos);
+    //myPlayer->getPlayerPos(playerPos);
 }
 
 void DrawScreen(void)
 {
+   
+    objPos playerPos; //new object position created
+    myPlayer->getPlayerPos(playerPos); // getting player position.. saved in myPlayer
+
     MacUILib_clearScreen(); 
     int row, col, k;
 
@@ -101,6 +110,8 @@ void DrawScreen(void)
 
     }
     MacUILib_printf("Board Size: %d x %d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), playerPos.x, playerPos.y, playerPos.symbol);
+    MacUILib_printf("This is the score %d\n", myGM->getScore());
+    MacUILib_printf("This is the lose screen %d\n", myGM->getLoseFlagStatus());
 }
 
 void LoopDelay(void)
@@ -114,4 +125,7 @@ void CleanUp(void)
     MacUILib_clearScreen();
   
     MacUILib_uninit();
+
+    delete myPlayer;
+    delete myGM;
 }

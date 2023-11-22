@@ -11,11 +11,8 @@ Player::Player(GameMechs* thisGMRef)
 }
 
 
-Player::~Player()
-{
-    // delete any heap members here
-    delete myPlayer;
-}
+// iterations 3 you will need deconstructor 
+
 
 void Player::getPlayerPos(objPos &returnPos)
 {
@@ -37,6 +34,14 @@ void Player::updatePlayerDir()
     {
         case ' ':
             mainGameMechsRef->setExitTrue();
+            break;
+        
+        case 'l':
+            mainGameMechsRef->setLoseFlag();
+            break;
+
+        case 'i':
+            mainGameMechsRef->incrementScore();
             break;
 
         case 'w':

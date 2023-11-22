@@ -27,22 +27,47 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
+        //objPos foodPos;
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
-        ~GameMechs();
+        //~GameMechs();
         
         bool getExitFlagStatus();
-        void setExitTrue();
-
+        bool getLoseFlagStatus();
         char getInput();
-        void setInput(char this_input);
-        void clearInput();
-
         int getBoardSizeX();
         int getBoardSizeY();
-      
+        int getScore(); 
+
+
+        void setExitTrue();
+        void setLoseFlag();
+        void setInput(char this_input);
+        void clearInput();
+        void incrementScore();
+
+       
+        //Food();
+        //~Food();
+       // void generateFood(blockOff objPos);
+       // void getFoodPos(returnPos &objPos);
 
 };
 
 #endif
+
+/*
+class food
+{
+    private:
+    objPos foodPos;
+
+    public:
+    Food();
+    //~Food();
+    void generateFood(blockOff objPos);
+    void getFoodPos(returnPos &objPos);
+}
+*/
