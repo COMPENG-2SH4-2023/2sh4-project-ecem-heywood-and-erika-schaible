@@ -1,26 +1,34 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 
+//think about where to seed the RING
+
+
 GameMechs::GameMechs()
 {
+    srand(time(NULL)); // seed the random integer generator 
     input = 0;
     exitFlag = false;
     boardSizeX = 20; // default size
     boardSizeY = 10;
     loseFlag = false;
     score = 0;
-    //objPos foodPas; // hold the most recently generated food position
+    foodPos.setObjPos(-1, -1, 'o');
+    
+     // hold the most recently generated food position
 
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
     input = 0;
+    score = 0;
     exitFlag = false;
+    loseFlag = false;
     boardSizeX = boardX;
     boardSizeY = boardY;
-    loseFlag = false;
-    score = 0;
+    
+    foodPos.setObjPos(-1, -1, 'o');
 }
 
 // do you need a destructor?
@@ -89,14 +97,47 @@ void GameMechs::clearInput()
 
 void GameMechs::incrementScore(){
     score += 1; // score incremented by one once the food is collected
-}
-
-/*
-void generateFood (objPos blockOff){
 
 }
 
-void getFoodPos(objPos &returnPos){
 
+void GameMechs:: generateFood (objPos blockOff){
+    
+    int conflict = 1;
+    while (conflict == 1){
+        //generate random x and y coordinate
+        // check x and y against 0 and boardSize / Y.
+        int randX = (rand() % (boardSizeX-2)) + 1; // can go from 1 to max -2
+        int randY = (rand() % (boardSizeY-2)) + 1; // can go from 1 to max - 2
+
+        //Check if it equals blackOff
+        objPos tempPos(randX, randY, 'o'); // objPos is type like int for class objPos
+        // puts pair
+
+        int check = blockOff.isPosEqual(&tempPos); // refPos == &tempPos
+        // if both equal it will return true therefore 1
+
+        if(check != 1){
+            conflict = 0; // genertated in player position
+            foodPos.x = randX;
+            foodPos.y = randY;
+            foodPos.symbol = 'o';
+            break;
+        }
+
+    }
+     
+    
 }
-*/
+
+void GameMechs:: getFoodPos( objPos &returnPos){
+    // return pos is an instance of objPos
+    // want to copy the food position and set it to the return pos
+    
+    //returnPos.x = foodPos.x;
+    //returnPos.y = foodPos.y
+    //returnPos.symbol = foodPos.symbol;
+    returnPos.setObjPos(foodPos);
+
+    
+}

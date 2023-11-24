@@ -36,6 +36,10 @@ void Player::updatePlayerDir()
             mainGameMechsRef->setExitTrue();
             break;
         
+        case 'f':
+            mainGameMechsRef->generateFood(playerPos);
+            break;
+        
         case 'l':
             mainGameMechsRef->setLoseFlag();
             break;
@@ -76,7 +80,7 @@ void Player::updatePlayerDir()
             default:
                 break;
     } 
-    mainGameMechsRef->clearInput();      
+     
 }
 
 void Player::movePlayer()
