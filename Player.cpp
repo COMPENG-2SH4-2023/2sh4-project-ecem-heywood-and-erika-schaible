@@ -7,17 +7,33 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
+    objPos tempPos;
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
+
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(tempPos);
+
+    //for debugging purpose - insert another four segments
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
 }
 
 
 // iterations 3 you will need deconstructor 
 
-
-void Player::getPlayerPos(objPos &returnPos)
+Player::~Player()
 {
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+    //delete heap members
+    delete playerPosList;
+}
+
+
+objPosArrayList* Player::getPlayerPos()
+{
     // return the reference to the playerPos arrray list
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -36,9 +52,9 @@ void Player::updatePlayerDir()
             mainGameMechsRef->setExitTrue();
             break;
         
-        case 'f':
-            mainGameMechsRef->generateFood(playerPos);
-            break;
+        // case 'f':
+        //     mainGameMechsRef->generateFood(tempPos);
+        //     break;
         
         case 'l':
             mainGameMechsRef->setLoseFlag();
@@ -86,44 +102,58 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
+    objPos currentHead; //holding the pos information of the current head
+    playerPosList->getHeadElement(currentHead);
     
     switch(myDir)
     {
         case UP:
-            playerPos.y = playerPos.y - 1;
-            if (playerPos.y == 0)
+            currentHead.y--;
+            if (currentHead.y <= 0)
             {
-                playerPos.y = mainGameMechsRef->getBoardSizeY() - 2;
+                currentHead.y = mainGameMechsRef->getBoardSizeY() - 2;
             }
             break;
 
         case DOWN:
-            playerPos.y++;
-            if (playerPos.y == mainGameMechsRef->getBoardSizeY() - 1)
+            currentHead.y++;
+            if (currentHead.y >= mainGameMechsRef->getBoardSizeY())
             {
-                playerPos.y = 1;
+                currentHead.y = 1;
             }
             break;
 
         case LEFT:
-            playerPos.x--;
-            if (playerPos.x == 0)
+            currentHead.x--;
+            if (currentHead.x <= 0)
             {
-                playerPos.x = mainGameMechsRef->getBoardSizeX() - 2;
+                currentHead.x = mainGameMechsRef->getBoardSizeX() - 2;
             }
             break;
 
         case RIGHT:
-            playerPos.x++;
-            if (playerPos.x == mainGameMechsRef->getBoardSizeX() - 1)
+            currentHead.x++;
+            if (currentHead.x >= mainGameMechsRef->getBoardSizeX())
             {
-                playerPos.x = 1;
+                currentHead.x = 1;
             }
             break;
 
+        case STOP:
         default:
             break;
     }
+
+    //new current head should be inserted to the head of the list
+    playerPosList->insertHead(currentHead);
+
+    //check if new head pos collides with food
+    //if yes, increment the score in GM and generate new food, don't remove tail
+    //otherwise, remove tail
+    
+    
+    //then remove tail
+    playerPosList->removeTail();
 
 }
 

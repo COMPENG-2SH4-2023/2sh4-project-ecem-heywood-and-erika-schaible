@@ -53,7 +53,12 @@ class GameMechs
        
         //Food();
         //~Food();
-        void generateFood(objPos blockOff);
+        void generateFood(objPos blockOff); //need to upgrade this somehow...
+        //Need to accept the player body array list
+        //go through each array list element to make sure they are all
+        //blocked off from random food generation (need a list of block offs?)
+
+
         void getFoodPos(objPos &returnPos);
 
 };
