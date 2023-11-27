@@ -5,11 +5,11 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-
-    // more actions to be included
     objPos tempPos;
-    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
 
+    //sets player location and symbol
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
+    //creates space on the heap
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
 
@@ -20,8 +20,6 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList->insertHead(tempPos);
 }
 
-
-// iterations 3 you will need deconstructor 
 
 Player::~Player()
 {
@@ -38,13 +36,6 @@ objPosArrayList* Player::getPlayerPos()
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic 
-
-    //Where does the input come from? How to check for input?
-    //Hint not MacUILib get char
-    //There will be a method in gamemechanism class that gets input and stores most recent
-    //Just need to figure out how to get to it
-    //How? It lies within the Gamemechs* inside your private member
     char input = mainGameMechsRef->getInput();
     switch(input)
     {
@@ -52,14 +43,6 @@ void Player::updatePlayerDir()
             mainGameMechsRef->setExitTrue();
             break;
         
-        // case 'f':
-        //     mainGameMechsRef->generateFood(tempPos);
-        //     break;
-        
-        case 'l':
-            mainGameMechsRef->setLoseFlag();
-            break;
-
         case 'i':
             mainGameMechsRef->incrementScore();
             break;
@@ -101,10 +84,11 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
-    // PPA3 Finite State Machine logic
-    objPos currentHead; //holding the pos information of the current head
+    //holding the position information of the current head
+    objPos currentHead;
     playerPosList->getHeadElement(currentHead);
     
+    //Player movement and wraparound logic
     switch(myDir)
     {
         case UP:
@@ -117,7 +101,7 @@ void Player::movePlayer()
 
         case DOWN:
             currentHead.y++;
-            if (currentHead.y >= mainGameMechsRef->getBoardSizeY())
+            if (currentHead.y >= mainGameMechsRef->getBoardSizeY() - 1)
             {
                 currentHead.y = 1;
             }
@@ -133,7 +117,7 @@ void Player::movePlayer()
 
         case RIGHT:
             currentHead.x++;
-            if (currentHead.x >= mainGameMechsRef->getBoardSizeX())
+            if (currentHead.x >= mainGameMechsRef->getBoardSizeX() - 1)
             {
                 currentHead.x = 1;
             }
@@ -144,42 +128,51 @@ void Player::movePlayer()
             break;
     }
 
-    //new current head should be inserted to the head of the list
+    //New head inserted to the head of the list
     playerPosList->insertHead(currentHead);
 
-    //check if new head pos collides with food
-    //if yes, increment the score in GM and generate new food, don't remove tail
-    //otherwise, remove tail
+    //check for self collision, if self collision ends game
+    if(myDir != STOP)
+    {
+        if(checkSelfCollision())
+        {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+        }
+    }
 
+    objPos foodPos;
+    //Checks if new head collides with food, increments snake and generates new food if true
     if (currentHead.x == foodPos.x && currentHead.y == foodPos.y){
         mainGameMechsRef-> generateFood (playerPosList);
-        mainGameMechsRef->incrementScore();//could we do this instead of setting score to array length??
-        
+        mainGameMechsRef->incrementScore();
     }
     else
     {
         playerPosList->removeTail();
     }
-    
-    
-    //then remove tail
-    //playerPosList->removeTail();
-
-    //int end = getTailElement(playerPosList) // how to know the final position of the snake?
-    // generateFood (insertTail(playerPosList) ); // block of the position of the list of the snake?
-
 }
 
-/*
 bool Player::checkSelfCollision()
 {
-    objPosArrayList* headElement = playerPosList->getHeadElement();
-    for(int i = 1; i < playerPosList.getSize(); i++)
-    {
+    //Checks for self collision
+    bool collision = false;
+    objPos currentHead;
+    objPos tempPos;
+    playerPosList->getHeadElement(currentHead);
 
+    //Compares current head to all other elements of the arraylist
+    for(int i = 1; i < playerPosList->getSize(); i++)
+    {
+        playerPosList->getElement(tempPos, i);
+        if(tempPos.isPosEqual(&currentHead))
+        {
+            collision = true;
+            break;
+        }
     }
+    return collision;
 }
-*/
 
 
 

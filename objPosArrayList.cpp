@@ -38,7 +38,6 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    //need error check here too
     if(sizeList == sizeArray)
     {
         return;
@@ -74,17 +73,7 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
     if(sizeList == 0 || index < 0 || index >= sizeList){
-        // shouldn't return anything
         return;
     }
     returnPos.setObjPos(aList[index]);
 }
-
-
-
-
-
-// might need 200 - 250
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.

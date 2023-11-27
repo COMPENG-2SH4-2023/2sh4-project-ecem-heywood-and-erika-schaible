@@ -44,11 +44,11 @@ bool GameMechs::getExitFlagStatus()
 bool GameMechs:: getLoseFlagStatus()
 {
     return loseFlag;
-    // snake starts eating itself it should be true
 }
 
 char GameMechs::getInput()
 {
+    //Recieves input from the user
     if (MacUILib_hasChar())
     {
         input = MacUILib_getChar();
@@ -97,7 +97,6 @@ void GameMechs::clearInput()
 
 void GameMechs::incrementScore(){
     score += 1; // score incremented by one once the food is collected
-
 }
 
 

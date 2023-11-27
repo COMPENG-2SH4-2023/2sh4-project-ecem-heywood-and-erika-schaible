@@ -32,7 +32,7 @@ class Player
         
         
         
-        //bool checkSelfCollision();
+        bool checkSelfCollision();
         //lastly, add self collision check
         // - if self-collided
         // - set lose flag and exitflag to true (through GM)

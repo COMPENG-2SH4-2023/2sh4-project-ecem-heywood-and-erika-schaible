@@ -11,7 +11,7 @@ using namespace std;
 #define DELAY_CONST 100000
 
 
-GameMechs* myGM;// pointer to game mech ... want to access anything here
+GameMechs* myGM;// pointer to game mech ... want to access anything through here
 Player* myPlayer;
 
 
@@ -29,10 +29,6 @@ int main(void)
 
     
     Initialize();
-    
-    // objPos playerPos; //new object position created
-    // myPlayer->getPlayerPos(playerPos); // getting player position.. saved in myPlayer
-    // myGM ->generateFood (playerPos);
     
 
     while(myGM->getExitFlagStatus() == false)  
@@ -56,15 +52,13 @@ void Initialize(void)
     myGM = new GameMechs(26, 13); //makes board size 26 x 13
     myPlayer = new Player(myGM);
 
-    // debug key call  for food generation for verification
-    
 
-    // remeber generateFood() requires player reference. You will need to provide it AFTER Player object is instantiated
+    // remember generateFood() requires player reference. You will need to provide it AFTER Player object is instantiated
     
     //this is a makeshift setup so we don't have to touch generate item yet
     //we need to do it though
     objPos tempPos(-1, -1, 'o');
-    myGM->generateFood(tempPos);//needs to be turned into arraylist operation
+    //myGM->generateFood(tempPos);//needs to be turned into arraylist operation
 }
 
 
@@ -156,6 +150,7 @@ void DrawScreen(void)
     }
     MacUILib_printf("Score: %d\n", myGM->getScore());
     MacUILib_printf("This is the lose screen %d\n", myGM->getLoseFlagStatus());
+    
 }
 
 void LoopDelay(void)
@@ -167,6 +162,15 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();
+
+    if(myGM->getLoseFlagStatus())
+    {
+        MacUILib_printf("You lost. Final score was %d\n", myGM->getScore());
+    }
+    else
+    {
+        MacUILib_printf("Final score was %d\n", myGM->getScore());
+    }
   
     MacUILib_uninit();
 
