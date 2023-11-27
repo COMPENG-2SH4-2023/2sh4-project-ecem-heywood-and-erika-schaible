@@ -53,7 +53,7 @@ class GameMechs
        
         //Food();
         //~Food();
-        void generateFood(objPos *objPosArrayList); //need to upgrade this somehow...
+        void generateFood(objPosArrayList* blockoff); //need to upgrade this somehow...
         
         // void generateFood(objPos blockOff);
         

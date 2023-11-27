@@ -152,7 +152,7 @@ void Player::movePlayer()
     //otherwise, remove tail
 
     if (currentHead.x == foodPos.x && currentHead.y == foodPos.y){
-        generateFood (objPos *objPosArrayList)
+        mainGameMechsRef-> generateFood (playerPosList);
         mainGameMechsRef->incrementScore();//could we do this instead of setting score to array length??
         
     }
@@ -170,6 +170,7 @@ void Player::movePlayer()
 
 }
 
+/*
 bool Player::checkSelfCollision()
 {
     objPosArrayList* headElement = playerPosList->getHeadElement();
@@ -178,4 +179,13 @@ bool Player::checkSelfCollision()
 
     }
 }
+*/
+
+
+
+
+
+
+
+
 

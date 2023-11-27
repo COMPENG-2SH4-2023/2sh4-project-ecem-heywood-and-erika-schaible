@@ -25,6 +25,7 @@ class objPosArrayList
         void getHeadElement(objPos &returnPos);
         void getTailElement(objPos &returnPos);
         void getElement(objPos &returnPos, int index);
+        // go to the address here & and change the variable.. updates saved after function call
 };
 
 #endif

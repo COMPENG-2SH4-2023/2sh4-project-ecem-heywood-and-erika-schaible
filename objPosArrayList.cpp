@@ -74,6 +74,7 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
     if(sizeList == 0 || index < 0 || index >= sizeList){
+        // shouldn't return anything
         return;
     }
     returnPos.setObjPos(aList[index]);
