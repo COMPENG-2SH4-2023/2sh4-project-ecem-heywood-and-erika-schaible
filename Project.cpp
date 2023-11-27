@@ -99,6 +99,12 @@ void DrawScreen(void)
     objPos tempFoodPos;
     myGM->getFoodPos(tempFoodPos);
 
+    // this is a makeshift set up so I don't hace to touch generateItemyet
+    // you need to do this yourself
+    //objPos tempFoodPos (1, 1, o); // turn into array list set up
+    //myGM->getFoodPos(tempFoodPos);
+
+
     int row, col, k;     
     bool drawn;
 
@@ -119,7 +125,7 @@ void DrawScreen(void)
                 drawn = false;
                 for(int i = 0; i < playerBody->getSize(); i++)
                 {
-                    playerBody->getElement(tempBody, i);
+                    playerBody->getElement(tempBody, i); // iterate through every position in the grid and if that matches a part of the body (string) draw it
                     if(tempBody.x == col && tempBody.y == row)
                     {
                         MacUILib_printf("%c", tempBody.symbol);

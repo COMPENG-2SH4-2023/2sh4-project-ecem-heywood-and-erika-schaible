@@ -101,7 +101,7 @@ void GameMechs::incrementScore(){
 }
 
 
-void GameMechs:: generateFood (objPos blockOff){
+void GameMechs:: generateFood (objPos *objPosArrayList){
     
     int conflict = 1;
     while (conflict == 1){
@@ -114,16 +114,36 @@ void GameMechs:: generateFood (objPos blockOff){
         objPos tempPos(randX, randY, 'o'); // objPos is type like int for class objPos
         // puts pair
 
-        int check = blockOff.isPosEqual(&tempPos); // refPos == &tempPos
+        int check = objPosArrayList->isPosEqual(&tempPos); // refPos == &tempPos
         // if both equal it will return true therefore 1
 
-        if(check != 1){
+        int size = objPosArrayList->getSize()
+
+        for (int i = 0; i < size; i++){
+            int check = objPosArrayList[i].isPosEqual(&tempPos);
+            
+            if(check != 1){ // only if there is no conlifct will it assign the value to thr random position
             conflict = 0; // genertated in player position
             foodPos.x = randX;
             foodPos.y = randY;
             foodPos.symbol = 'o';
-            break;
+            break; // do I need this?
+            }
         }
+        if (conflict == 0){
+            break; // leave while loop if no conflict
+        }
+
+/*
+        if(check != 1){ // only if there is no conlifct will it assign the value to thr random position
+            conflict = 0; // genertated in player position
+            foodPos.x = randX;
+            foodPos.y = randY;
+            foodPos.symbol = 'o';
+            break; 
+            }
+            */
+      
 
     }
      

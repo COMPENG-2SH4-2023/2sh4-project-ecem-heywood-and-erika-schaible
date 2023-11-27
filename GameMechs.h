@@ -41,7 +41,7 @@ class GameMechs
         char getInput();
         int getBoardSizeX();
         int getBoardSizeY();
-        int getScore();  // cound add const
+        int getScore();  // could add const
 
 
         void setExitTrue();
@@ -53,7 +53,11 @@ class GameMechs
        
         //Food();
         //~Food();
-        void generateFood(objPos blockOff); //need to upgrade this somehow...
+        void generateFood(objPos *objPosArrayList); //need to upgrade this somehow...
+        
+        // void generateFood(objPos blockOff);
+        
+        
         //Need to accept the player body array list
         //go through each array list element to make sure they are all
         //blocked off from random food generation (need a list of block offs?)
@@ -65,16 +69,3 @@ class GameMechs
 
 #endif
 
-/*
-class food
-{
-    private:
-    objPos foodPos;
-
-    public:
-    Food();
-    //~Food();
-    void generateFood(blockOff objPos);
-    void getFoodPos(returnPos &objPos);
-}
-*/

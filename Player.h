@@ -19,15 +19,17 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
-        objPosArrayList* getPlayerPos(); // Upgrade this in iteration 3.
+        objPosArrayList* getPlayerPos(); // Upgrade this in iteration 3. shows should be private in doc? Should it be?
         void updatePlayerDir();
         void movePlayer();
+        bool checkFoodConsumption();
+        void increasePlayerLength();
         //Need more actions in here:
         //after inserting the head but before removing the tail
         // - check if new head position collides with food
         // - if yes, increment the score in GM, generate new food, and do not remove the tail
         // - otherwise remove the tail and move on
-
+        bool checkSelfCollision();
         //lastly, add self collision check
         // - if self-collided
         // - set lose flag and exitflag to true (through GM)

@@ -150,10 +150,32 @@ void Player::movePlayer()
     //check if new head pos collides with food
     //if yes, increment the score in GM and generate new food, don't remove tail
     //otherwise, remove tail
+
+    if (currentHead.x == foodPos.x && currentHead.y == foodPos.y){
+        generateFood (objPos *objPosArrayList)
+        mainGameMechsRef->incrementScore();//could we do this instead of setting score to array length??
+        
+    }
+    else
+    {
+        playerPosList->removeTail();
+    }
     
     
     //then remove tail
-    playerPosList->removeTail();
+    //playerPosList->removeTail();
 
+    //int end = getTailElement(playerPosList) // how to know the final position of the snake?
+    // generateFood (insertTail(playerPosList) ); // block of the position of the list of the snake?
+
+}
+
+bool Player::checkSelfCollision()
+{
+    objPosArrayList* headElement = playerPosList->getHeadElement();
+    for(int i = 1; i < playerPosList.getSize(); i++)
+    {
+
+    }
 }
 
