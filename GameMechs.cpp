@@ -110,15 +110,13 @@ void GameMechs:: generateFood (objPosArrayList* blockoff){
         int randX = (rand() % (boardSizeX-2)) + 1; // can go from 1 to max -2
         int randY = (rand() % (boardSizeY-2)) + 1; // can go from 1 to max - 2
 
-        //Check if it equals blackOff
-        objPos tempPos(randX, randY, 'o'); // objPos is type like int for class objPos
+        //Check if it equals blockOff
+        objPos tempPos;
+        tempPos.setObjPos(randX, randY, 'o'); // objPos is type like int for class objPos
         // puts pair
         // define a new objPos which is used for getElemnt output value
         
        objPos tempArr;
-
-        //int check = blockoff->isPosEqual(&tempPos); // refPos == &tempPos
-        // if both equal it will return true therefore 1
 
         int size = blockoff->getSize();
         int check = 0;
@@ -126,51 +124,18 @@ void GameMechs:: generateFood (objPosArrayList* blockoff){
 
         for (k = 0; k < size; k++){
             blockoff->getElement(tempArr, k);
-            //check = tempPos.isPosEqual(tempArr);
 
-            if(tempPos.isPosEqual(&tempArr)){ // only if there is no conlifct will it assign the value to thr random position
-            conflict = 0; // genertated in player position
-            foodPos.x = randX;
-            foodPos.y = randY;
-            foodPos.symbol = 'o';
-            break; // do I need this?
+            if(tempPos.isPosEqual(&tempArr) == false){ // only if there is no conlifct will it assign the value to thr random position
+                conflict = 0; // genertated in player position
+                foodPos.x = randX;
+                foodPos.y = randY;
+                foodPos.symbol = 'o';
+                break; // do I need this?
             }
         }
-
-
-/*
-        for (int i = 0; i < size; i++){
-            int check = blockoff[i]->getElement(tempPos, i);
-            // tempPos.isPosEqual(blockoff[i])
-            
-            //int check = blockoff[i].isPosEqual(&tempPos);
-            
-            if(check != 1){ // only if there is no conlifct will it assign the value to thr random position
-            conflict = 0; // genertated in player position
-            foodPos.x = randX;
-            foodPos.y = randY;
-            foodPos.symbol = 'o';
-            break; // do I need this?
-            }
-        }
-        */
-
-
         if (conflict == 0){
             break; // leave while loop if no conflict
         }
-
-/*
-        if(check != 1){ // only if there is no conlifct will it assign the value to thr random position
-            conflict = 0; // genertated in player position
-            foodPos.x = randX;
-            foodPos.y = randY;
-            foodPos.symbol = 'o';
-            break; 
-            }
-            */
-      
-
     }
      
     
@@ -179,10 +144,6 @@ void GameMechs:: generateFood (objPosArrayList* blockoff){
 void GameMechs:: getFoodPos( objPos &returnPos){
     // return pos is an instance of objPos
     // want to copy the food position and set it to the return pos
-    
-    //returnPos.x = foodPos.x;
-    //returnPos.y = foodPos.y
-    //returnPos.symbol = foodPos.symbol;
     returnPos.setObjPos(foodPos);
 
     

@@ -13,11 +13,7 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
 
-    //for debugging purpose - insert another four segments
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
+    mainGameMechsRef->generateFood(playerPosList);
 }
 
 
@@ -41,10 +37,6 @@ void Player::updatePlayerDir()
     {
         case ' ':
             mainGameMechsRef->setExitTrue();
-            break;
-        
-        case 'i':
-            mainGameMechsRef->incrementScore();
             break;
 
         case 'w':
@@ -142,9 +134,10 @@ void Player::movePlayer()
     }
 
     objPos foodPos;
+    mainGameMechsRef->getFoodPos(foodPos);
     //Checks if new head collides with food, increments snake and generates new food if true
-    if (currentHead.x == foodPos.x && currentHead.y == foodPos.y){
-        mainGameMechsRef-> generateFood (playerPosList);
+    if (currentHead.isPosEqual(&foodPos)){
+        mainGameMechsRef-> generateFood(playerPosList);
         mainGameMechsRef->incrementScore();
     }
     else

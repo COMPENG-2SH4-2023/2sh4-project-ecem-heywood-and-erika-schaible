@@ -57,8 +57,13 @@ void Initialize(void)
     
     //this is a makeshift setup so we don't have to touch generate item yet
     //we need to do it though
-    objPos tempPos(-1, -1, 'o');
+    
+    //objPosArrayList SnakeAr;
+
+
+    //objPos tempPos(-1, -1, 'o');
     //myGM->generateFood(tempPos);//needs to be turned into arraylist operation
+    //need to pass the player snake
 }
 
 
@@ -95,8 +100,8 @@ void DrawScreen(void)
 
     // this is a makeshift set up so I don't hace to touch generateItemyet
     // you need to do this yourself
-    //objPos tempFoodPos (1, 1, o); // turn into array list set up
-    //myGM->getFoodPos(tempFoodPos);
+    // objPos tempFoodPos (1, 1, 'o'); // turn into array list set up
+    // myGM->getFoodPos(tempFoodPos);
 
 
     int row, col, k;     
