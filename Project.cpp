@@ -11,8 +11,8 @@ using namespace std;
 #define DELAY_CONST 100000
 
 
-GameMechs* myGM;// pointer to game mech ... want to access anything through here
-Player* myPlayer;
+GameMechs* myGM;// pointer to gameMechs, access anything gameMechs through here
+Player* myPlayer;//pointer to Player, access anything Player through here
 
 
 void Initialize(void);
@@ -49,21 +49,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(26, 13); //makes board size 26 x 13
+    myGM = new GameMechs(26, 13); //initializes board size
     myPlayer = new Player(myGM);
-
-
-    // remember generateFood() requires player reference. You will need to provide it AFTER Player object is instantiated
-    
-    //this is a makeshift setup so we don't have to touch generate item yet
-    //we need to do it though
-    
-    //objPosArrayList SnakeAr;
-
-
-    //objPos tempPos(-1, -1, 'o');
-    //myGM->generateFood(tempPos);//needs to be turned into arraylist operation
-    //need to pass the player snake
 }
 
 
@@ -75,17 +62,9 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    //objPos playerPos; //new object position created ... NAME
-    //myPlayer->getPlayerPos(playerPos); // getting player position.. saved in myPlayer
-    // setting data of obj you set data to playerPos using the getter function
-
-    myPlayer->updatePlayerDir(); // update input 
-    myPlayer->movePlayer(); // make a move
-    myGM ->clearInput(); // so to not repeatedly process the input
-    
-    
-
-    //myPlayer->getPlayerPos(playerPos);
+    myPlayer->updatePlayerDir(); //Updates player direction according to input
+    myPlayer->movePlayer(); //Moves player according to input
+    myGM ->clearInput(); //Clears input to not repeatedly process input
 }
 
 void DrawScreen(void)
@@ -98,16 +77,10 @@ void DrawScreen(void)
     objPos tempFoodPos;
     myGM->getFoodPos(tempFoodPos);
 
-    // this is a makeshift set up so I don't hace to touch generateItemyet
-    // you need to do this yourself
-    // objPos tempFoodPos (1, 1, 'o'); // turn into array list set up
-    // myGM->getFoodPos(tempFoodPos);
-
-
     int row, col, k;     
     bool drawn;
 
-    for (row = 0; row < myGM->getBoardSizeY(); row ++)
+    for (row = 0; row < myGM->getBoardSizeY(); row ++) //cycle through rows
     {
         if (row == 0 || row == myGM->getBoardSizeY() - 1) // first or last row print
         {
@@ -133,17 +106,19 @@ void DrawScreen(void)
                     }
                 }
 
-                if(drawn) continue;
                 //if player body was drawn, don't draw anything below
+                if(drawn) continue;
 
                 if (col == 0 || col == myGM->getBoardSizeX() - 1) // first or last column
                 {
                     MacUILib_printf("%c", '#');
                 }
+                //Prints food
                 else if (row == tempFoodPos.y && col == tempFoodPos.x)
                 {
                     MacUILib_printf("%c",tempFoodPos.symbol);                    
                 }
+                //Fills unaccounted for space
                 else
                 {
                         MacUILib_printf("%c", ' ');
@@ -153,9 +128,7 @@ void DrawScreen(void)
         MacUILib_printf("\n");
 
     }
-    MacUILib_printf("Score: %d\n", myGM->getScore());
-    MacUILib_printf("This is the lose screen %d\n", myGM->getLoseFlagStatus());
-    
+    MacUILib_printf("Score: %d\n", myGM->getScore());    
 }
 
 void LoopDelay(void)
@@ -170,18 +143,17 @@ void CleanUp(void)
 
     if(myGM->getLoseFlagStatus())
     {
+        //Game lost message
         MacUILib_printf("You lost. Final score was %d\n", myGM->getScore());
     }
     else
     {
+        //Game exited message
         MacUILib_printf("Final score was %d\n", myGM->getScore());
     }
   
     MacUILib_uninit();
 
-    
     delete myGM;
     delete myPlayer;
-    // obj created on stack and allocated in heap don't need to call in main.... if defined in the player.and in the h faile the c++ program will find it an call it and clean up itself
-    // if obj on stack is declared to have space on heap the c++ will clean up by itself 
 }

@@ -1,11 +1,8 @@
 #include "objPosArrayList.h"
 
-// Check lecture contents on general purpose array list construction, 
-// and modify it to support objPos array list construction.
-
 objPosArrayList::objPosArrayList()
 {
-    aList = new objPos[ARRAY_MAX_CAP]; //200 elements on the heap
+    aList = new objPos[ARRAY_MAX_CAP]; //256 elements on the heap
     sizeList = 0; //no valid element in the list upon startup
     sizeArray = ARRAY_MAX_CAP; //array capacity should be max
 }
@@ -22,16 +19,17 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    //need error check, what if list size is at capacity??
     //check if sizeList is equal to sizeArray. If yes, don't insert
     if(sizeList == sizeArray)
     {
         return;
     }
+
     for(int i = sizeList; i > 0; i--)
     {
         aList[i].setObjPos(aList[i-1]); //shuffles all the elements towards the tail
     }
+    //Inserts head element and increases length counter
     aList[0].setObjPos(thisPos);
     sizeList++;
 }
@@ -42,6 +40,7 @@ void objPosArrayList::insertTail(objPos thisPos)
     {
         return;
     }
+    //Inserts tail element and increases length counter
     aList[sizeList].setObjPos(thisPos);
     sizeList++;
 }
@@ -72,7 +71,9 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
-    if(sizeList == 0 || index < 0 || index >= sizeList){
+    //Checks if desired index is valid
+    if(sizeList == 0 || index < 0 || index >= sizeList)
+    {
         return;
     }
     returnPos.setObjPos(aList[index]);

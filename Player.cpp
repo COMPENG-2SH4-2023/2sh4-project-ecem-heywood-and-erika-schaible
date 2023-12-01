@@ -11,15 +11,16 @@ Player::Player(GameMechs* thisGMRef)
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
     //creates space on the heap
     playerPosList = new objPosArrayList();
+    //Inserts new head (first element of snake)
     playerPosList->insertHead(tempPos);
-
+    //Generates food
     mainGameMechsRef->generateFood(playerPosList);
 }
 
 
 Player::~Player()
 {
-    //delete heap members
+    //deletes heap members
     delete playerPosList;
 }
 
@@ -32,6 +33,7 @@ objPosArrayList* Player::getPlayerPos()
 
 void Player::updatePlayerDir()
 {
+    //Processes user direction input
     char input = mainGameMechsRef->getInput();
     switch(input)
     {
@@ -120,7 +122,7 @@ void Player::movePlayer()
             break;
     }
 
-    //New head inserted to the head of the list
+    //New head inserted to the first position of the list
     playerPosList->insertHead(currentHead);
 
     //check for self collision, if self collision ends game
@@ -133,9 +135,10 @@ void Player::movePlayer()
         }
     }
 
+    //Holding food position information
     objPos foodPos;
     mainGameMechsRef->getFoodPos(foodPos);
-    //Checks if new head collides with food, increments snake and generates new food if true
+    //Checks if new head collides with food, increases snake and generates new food if true
     if (currentHead.isPosEqual(&foodPos)){
         mainGameMechsRef-> generateFood(playerPosList);
         mainGameMechsRef->incrementScore();
@@ -158,12 +161,14 @@ bool Player::checkSelfCollision()
     for(int i = 1; i < playerPosList->getSize(); i++)
     {
         playerPosList->getElement(tempPos, i);
+        //If head collides with body element, raises flag
         if(tempPos.isPosEqual(&currentHead))
         {
             collision = true;
             break;
         }
     }
+    //Returns collision status
     return collision;
 }
 
